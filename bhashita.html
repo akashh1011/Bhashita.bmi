@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BMI & WHR Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input[type="number"],
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .result {
+      font-size: 16px;
+      font-weight: bold;
+      color: #007BFF;
+      margin-top: 10px;
+    }
+    h2, h3, h4 {
+      margin-bottom: 15px;
+      color: #333;
+    }
+    hr {
+      margin: 25px 0;
+    }
+    .reference-table {
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-top: 20px;
+      border: 1px solid #ddd;
+    }
+    .reference-table ul {
+      padding-left: 20px;
+    }
+    .reference-table li {
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>🧍 Health Metrics Calculator</h2>
+
+    <!-- 👤 Personal Information -->
+    <label for="name">👤 Name:</label>
+    <input type="text" id="name" placeholder="Enter your name">
+
+    <label for="age">🎂 Age:</label>
+    <input type="number" id="age" placeholder="Enter your age">
+
+    <label for="gender">👥 Gender:</label>
+    <select id="gender">
+      <option value="">Select gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <!-- 📏 Anthropometric Inputs -->
+    <label for="height">📏 Height (cm):</label>
+    <input type="number" id="height" placeholder="Enter height in cm">
+
+    <label for="weight">⚖️ Weight (kg):</label>
+    <input type="number" id="weight" placeholder="Enter weight in kg">
+
+    <div class="result" id="bmi">🧮 BMI: --</div>
+
+    <hr>
+
+    <!-- 🔸 Clinical Add-ons -->
+    <h3>🔸 Clinical Add-ons</h3>
+
+    <label for="waist">📍 Waist Circumference (cm):</label>
+    <input type="number" id="waist" placeholder="Enter waist in cm">
+
+    <label for="hip">📍 Hip Circumference (cm):</label>
+    <input type="number" id="hip" placeholder="Enter hip in cm">
+
+    <div class="result" id="whr">🔄 WHR: --</div>
+
+    <!-- 📊 Reference Table -->
+    <div class="reference-table">
+      <h4>📊 Reference Table</h4>
+
+      <strong>BMI Category:</strong>
+      <ul>
+        <li>&lt;18.5 → Underweight</li>
+        <li>18.5–24.9 → Normal</li>
+        <li>25–29.9 → Overweight</li>
+        <li>≥30 → Obese</li>
+      </ul>
+
+      <strong>Waist Circumference Risk (for Indians):</strong>
+      <ul>
+        <li>Males: &gt;90 cm</li>
+        <li>Females: &gt;80 cm</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const heightInput = document.getElementById('height');
+    const weightInput = document.getElementById('weight');
+    const waistInput = document.getElementById('waist');
+    const hipInput = document.getElementById('hip');
+    const bmiDisplay = document.getElementById('bmi');
+    const whrDisplay = document.getElementById('whr');
+
+    function calculateBMI() {
+      const heightCm = parseFloat(heightInput.value);
+      const weightKg = parseFloat(weightInput.value);
+
+      if (heightCm > 0 && weightKg > 0) {
+        const heightM = heightCm / 100;
+        const bmi = weightKg / (heightM * heightM);
+        bmiDisplay.textContent = `🧮 BMI: ${bmi.toFixed(2)}`;
+      } else {
+        bmiDisplay.textContent = '🧮 BMI: --';
+      }
+    }
+
+    function calculateWHR() {
+      const waist = parseFloat(waistInput.value);
+      const hip = parseFloat(hipInput.value);
+
+      if (waist > 0 && hip > 0) {
+        const whr = waist / hip;
+        whrDisplay.textContent = `🔄 WHR: ${whr.toFixed(2)}`;
+      } else {
+        whrDisplay.textContent = '🔄 WHR: --';
+      }
+    }
+
+    heightInput.addEventListener('input', calculateBMI);
+    weightInput.addEventListener('input', calculateBMI);
+    waistInput.addEventListener('input', calculateWHR);
+    hipInput.addEventListener('input', calculateWHR);
+  </script>
+
+</body>
+</html>
